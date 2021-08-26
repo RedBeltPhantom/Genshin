@@ -1,4 +1,8 @@
 package com.revature.genshin.screens
 
-class CharacterScreen {
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+
+@Composable
+fun CharacterScreen(navController: NavHostController) {
 }

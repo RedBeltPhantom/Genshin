@@ -1,4 +1,8 @@
 package com.revature.genshin.screens
 
-class WeaponScreen {
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+
+@Composable
+fun WeaponScreen(navController: NavHostController) {
 }

@@ -1,4 +1,8 @@
 package com.revature.genshin.screens
 
-class InventoryScreen {
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+
+@Composable
+fun InventoryScreen(navController: NavHostController) {
 }

@@ -1,4 +1,8 @@
 package com.revature.genshin.screens
 
-class BuildScreen {
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+
+@Composable
+fun BuildScreen(navController: NavHostController){
 }
