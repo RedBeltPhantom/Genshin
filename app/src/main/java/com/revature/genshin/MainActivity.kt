@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                   Text(text = "How did you get here? This shouldn't be possible!")
                 }
                 NavHost(navController = navController, startDestination = "MainScreen")
                 {
@@ -51,16 +51,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    GenshinTheme {
-        Greeting("Android")
-    }
+fun defaultMessage(msg:String)
+{
+    Text(text = msg)
 }

@@ -4,10 +4,7 @@ import android.graphics.Paint
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.absolutePadding
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,11 +13,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.revature.genshin.Greeting
 import com.revature.genshin.R
+import com.revature.genshin.defaultMessage
 
 @Composable
 fun MainScreen(navController: NavHostController) {
+    defaultMessage("")
     Column(modifier = Modifier
         .background(MaterialTheme.colors.background)
 //        .height(300.dp)
@@ -28,6 +26,7 @@ fun MainScreen(navController: NavHostController) {
         MyTopBar(navController)
         Spacer(modifier = Modifier.height(20.dp))
         WelcomeMessage()
+        navigationButtons(navController = navController)
     }
 }
 @Composable
@@ -68,7 +67,39 @@ fun WelcomeMessage()
             Text(text = "Hello Whales")
         }
         Surface(color = MaterialTheme.colors.onPrimary) {
-            Greeting(name = "Its Time To Spend $$$")
+            Text(text = "Its Time To Spend $$$")
+        }
+        
+    }
+}
+
+@Composable
+fun navigationButtons(navController: NavHostController)
+{
+    Column() {
+        Row() {
+            Button(onClick = {
+                navController.navigate("BuildScreen")
+            }){
+                Text(text = "BuildScreen")
+            }
+            Button(onClick = {
+                navController.navigate("CharacterScreen")
+            }){
+                Text(text = "CharacterScreen")
+            }
+        }
+        Row() {
+            Button(onClick = {
+                navController.navigate("InventoryScreen")
+            }){
+                Text(text = "InventoryScreen")
+            }
+            Button(onClick = {
+                navController.navigate("WeaponScreen")
+            }){
+                Text(text = "WeaponScreen")
+            }
         }
         
     }
