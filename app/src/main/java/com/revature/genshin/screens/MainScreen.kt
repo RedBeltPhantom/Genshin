@@ -4,11 +4,22 @@ import android.graphics.Paint
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.DraggableState
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteCutCornerShape
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -83,11 +94,12 @@ fun navigationButtons(navController: NavHostController)
             Button(onClick = {
                 navController.navigate("BuildScreen")
             }){
-                Text(text = "BuildScreen")
+                Text(text = "BuildScreen", modifier = Modifier.clip(shape = AbsoluteCutCornerShape(50.dp)))
             }
             Button(onClick = {
                 navController.navigate("CharacterScreen/Ninguang")
-            }){
+            }, modifier = Modifier
+                .clip(shape = AbsoluteCutCornerShape(50.dp))){
                 Text(text = "CharacterScreen")
             }
         }
@@ -95,12 +107,12 @@ fun navigationButtons(navController: NavHostController)
             Button(onClick = {
                 navController.navigate("InventoryScreen")
             }){
-                Text(text = "InventoryScreen")
+                Text(text = "InventoryScreen", Modifier.clip(shape = AbsoluteCutCornerShape(50.dp)))
             }
             Button(onClick = {
                 navController.navigate("WeaponScreen")
             }){
-                Text(text = "WeaponScreen")
+                Text(text = "WeaponScreen", Modifier.clip(shape = AbsoluteCutCornerShape(50.dp)))
             }
         }
         
