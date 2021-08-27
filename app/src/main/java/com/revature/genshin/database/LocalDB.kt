@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import java.security.AccessControlContext
 
-@Database(entities = arrayOf(Character::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Character::class), version = 58, exportSchema = false)
 abstract class LocalDB : RoomDatabase() {
 
     abstract fun characters():DBDao
@@ -17,7 +17,7 @@ abstract class LocalDB : RoomDatabase() {
             if(INSTANCE==null)
             {
                 INSTANCE = Room.databaseBuilder(context.applicationContext,
-                LocalDB::class.java, "testing").build()
+                LocalDB::class.java, "testing").fallbackToDestructiveMigration().build()
             }
             return INSTANCE
         }

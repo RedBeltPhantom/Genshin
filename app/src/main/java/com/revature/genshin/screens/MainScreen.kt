@@ -13,6 +13,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.Navigator
+import androidx.navigation.navOptions
 import com.revature.genshin.R
 import com.revature.genshin.defaultMessage
 
@@ -84,7 +86,7 @@ fun navigationButtons(navController: NavHostController)
                 Text(text = "BuildScreen")
             }
             Button(onClick = {
-                navController.navigate("CharacterScreen")
+                navController.navigate("CharacterScreen/Ninguang")
             }){
                 Text(text = "CharacterScreen")
             }

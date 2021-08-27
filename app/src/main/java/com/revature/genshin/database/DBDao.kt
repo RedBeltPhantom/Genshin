@@ -3,26 +3,36 @@ package com.revature.genshin.database
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 
 @Dao
-abstract class DBDao {
+interface  DBDao {
 
     @Insert
-    abstract suspend fun insert(character:Character)
+    suspend fun insert(cha:Character)
 
-//    @Query("SELECT * FROM Character WHERE charID=:character")
-//    fun getMaterials(character:UInt):Map<Int, List<Pair<String, Int>>>
-//
-//    @Query("SELECT * FROM Character WHERE charId=:character")
-//    fun getWeaponType(character:UInt):Weapon
-//
-//    @Query("SELECT * FROM Character WHERE charId=:character")
-//    fun getElementType(character:UInt):Element
+    @Update
+    suspend fun update(cha:Character)
 
-    @Query("SELECT * FROM Character WHERE charId= :character")
-    abstract suspend fun get(character:UInt):Character
+    @Insert
+    suspend fun safeInsert(champion:Character)
+    {
+        val cha:Character? =getChar(champion.Character_Name?:"")
+        if(cha == null)
+        {
+            insert(champion)
+        }
+        else
+        {
+            //do nothing, if character is already there
+        }
+    }
 
-//    @Query("SELECT * FROM Character WHERE charId=:character")
-//    fun getLevel(character:UInt):UInt
+    @Query("SELECT * FROM Character WHERE Character_Name= :name")
+    suspend fun getChar(name:String):Character?
+
+    @Query("SELECT * FROM CHARACTER")
+    suspend fun getChars():List<Character>
+
 }
