@@ -20,6 +20,8 @@ import com.revature.genshin.R
 
 @Composable
 fun CharacterScreen(navController: NavHostController, characterName:String) {
+
+
     Column(modifier = Modifier
         .background(MaterialTheme.colors.background)
         .fillMaxWidth()
