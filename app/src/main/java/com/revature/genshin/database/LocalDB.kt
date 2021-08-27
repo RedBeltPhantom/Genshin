@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import java.security.AccessControlContext
 
-@Database(entities = arrayOf(Character::class), version = 58, exportSchema = false)
+@Database(entities = [Character::class, MaterialListing::class], version = 59, exportSchema = false)
 abstract class LocalDB : RoomDatabase() {
 
     abstract fun characters():DBDao
+    abstract fun materials():MaterialsDao
 
     companion object{
         private var INSTANCE:LocalDB? = null

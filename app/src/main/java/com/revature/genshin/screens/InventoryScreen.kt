@@ -1,5 +1,6 @@
 package com.revature.genshin.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,10 +14,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.revature.genshin.database.*
 import com.revature.genshin.defaultMessage
+import com.revature.genshin.viewmodels.GlobalViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.selects.select
 
 @Preview
 @Composable
@@ -28,6 +34,10 @@ fun preview()
 @Composable
 fun InventoryScreen(navController: NavHostController) {
 
+    var db = GlobalViewModel.getDataBase()
+    Log.i("DB", "Retrieving Materials")
+    var masterList = GlobalViewModel.getMaterials()
+    Log.i("DB", "Materials Retrieved")
     var itemsCommonMaterialLow:ArrayList<Common_Material_Low> = ArrayList()
     for(x in Common_Material_Low.values())
         itemsCommonMaterialLow.add(x)
@@ -69,6 +79,7 @@ fun InventoryScreen(navController: NavHostController) {
 
                 var selected by remember { mutableStateOf(0) }
                 var expandedVar by remember { mutableStateOf(false) }
+                var value by remember{ mutableStateOf(0)}
                 Row() {
                     Box(modifier = Modifier) {
                         Text(arrRef[selected].name,
@@ -83,6 +94,9 @@ fun InventoryScreen(navController: NavHostController) {
                                 DropdownMenuItem(onClick = {
                                     selected = index
                                     expandedVar = false
+                                    value =  masterList[masterList.indexOf(
+                                        MaterialListing(arrRef[selected].name,
+                                            0))].number
                                 }) {
                                     Text(text = material.name)
                                 }
@@ -93,10 +107,11 @@ fun InventoryScreen(navController: NavHostController) {
                 }
                 Row()
                 {
-                    var value by remember{ mutableStateOf(0)}
+
                     Box(Modifier.border(2.dp, Color.Black, shape = MaterialTheme.shapes.medium )){
                         ClickableText(text = AnnotatedString("minus"),
-                            onClick = {if(value>0)value--},
+                            onClick = {if(value>0)value--
+                                GlobalViewModel.updateMaterial(MaterialListing(arrRef[selected].name, value))},
                             modifier = Modifier.padding(3.dp))
                     }
 
@@ -110,7 +125,8 @@ fun InventoryScreen(navController: NavHostController) {
                     Spacer(modifier = Modifier.padding(horizontal = 6.dp))
                     Box(Modifier.border(2.dp, Color.Black , shape = MaterialTheme.shapes.medium)) {
                         ClickableText(
-                            text = AnnotatedString("plus"), onClick = { value++ },
+                            text = AnnotatedString("plus"), onClick = { value++
+                                GlobalViewModel.updateMaterial(MaterialListing(arrRef[selected].name, value))},
                             modifier = Modifier.padding(3.dp)
                         )
                     }
@@ -122,6 +138,7 @@ fun InventoryScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.padding(horizontal = 6.dp))
             var selected by remember { mutableStateOf(0) }
             var expandedVar by remember { mutableStateOf(false) }
+            var value by remember{ mutableStateOf(0)}
             Row(){
                 Box(modifier = Modifier) {
                     Text(itemsElemental_Stone_Material[selected],
@@ -136,6 +153,9 @@ fun InventoryScreen(navController: NavHostController) {
                             DropdownMenuItem(onClick = {
                                 selected = index
                                 expandedVar = false
+                                value =  masterList[masterList.indexOf(
+                                    MaterialListing(itemsElemental_Stone_Material[selected],
+                                        0))].number
                             }) {
                                 Text(text = material)
                             }
@@ -146,10 +166,13 @@ fun InventoryScreen(navController: NavHostController) {
             }
             Row()
             {
-                var value by remember{ mutableStateOf(0)}
+
                 Box(Modifier.border(2.dp, Color.Black, shape = MaterialTheme.shapes.medium )){
                     ClickableText(text = AnnotatedString("minus"),
-                        onClick = {if(value>0)value--},
+                        onClick = {if(value>0){
+                            value--
+                            GlobalViewModel.updateMaterial((MaterialListing(itemsElemental_Stone_Material[selected], value)))
+                        }},
                         modifier = Modifier.padding(3.dp))
                 }
 
@@ -163,7 +186,9 @@ fun InventoryScreen(navController: NavHostController) {
                 Spacer(modifier = Modifier.padding(horizontal = 6.dp))
                 Box(Modifier.border(2.dp, Color.Black , shape = MaterialTheme.shapes.medium)) {
                     ClickableText(
-                        text = AnnotatedString("plus"), onClick = { value++ },
+                        text = AnnotatedString("plus"), onClick = {
+                            value++
+                            GlobalViewModel.updateMaterial((MaterialListing(itemsElemental_Stone_Material[selected], value)))},
                         modifier = Modifier.padding(3.dp)
                     )
                 }
@@ -171,4 +196,5 @@ fun InventoryScreen(navController: NavHostController) {
 
         }
     }
+
 }

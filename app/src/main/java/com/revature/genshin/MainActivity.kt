@@ -11,9 +11,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.toLowerCase
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -29,16 +26,19 @@ import java.util.*
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val db =LocalDB.getDatabase(this)!!
 
+        val db =LocalDB.getDatabase(this)!!
         Log.i("DB", "Database successfully built")
-        val viewModel=GlobalViewModel(db)
+        GlobalViewModel.setDataBase(db)
+        println(GlobalViewModel.getDataBase().toString())
 
 
         //Insert characters into the database if not already present
         lifecycleScope.launch(Dispatchers.IO) {
-            Log.i("DB", "Loading Database:")
-            populateDatabase(db)
+            Log.i("DB", "Loading Characters:")
+            loadCharacters()
+            Log.i("DB", "Loading Materials")
+            loadMaterials()
         }
         setContent {
             GenshinTheme {
@@ -91,8 +91,9 @@ fun defaultMessage(msg:String)
 }
 
 
-private suspend fun populateDatabase(db: LocalDB)
+private suspend fun loadCharacters()
 {
+    var db = GlobalViewModel.getDataBase()
     var champion = Character(
         "Keqing",
         1,
@@ -168,5 +169,37 @@ private suspend fun populateDatabase(db: LocalDB)
     .replace('_', ' ').lowercase(Locale.getDefault()).capitalize(Locale.getDefault()) +"\n" }
 
         Log.i("DB", j.split(" ",).fold(""){b, it-> b+it.capitalize(Locale.getDefault())+" "})
+
+}
+
+private suspend fun loadMaterials()
+{
+    var db =GlobalViewModel.getDataBase()
+
+    for(x in Common_Material_Low.values())
+    { db.materials().safeInsert(MaterialListing(x.name, 0))}
+
+    for(x in Common_Material_Mid.values())
+    { db.materials().safeInsert(MaterialListing(x.name, 0))}
+
+    for(x in Common_Material_High.values())
+    { db.materials().safeInsert(MaterialListing(x.name, 0))}
+
+    for(x in Boss_Material.values())
+    { db.materials().safeInsert(MaterialListing(x.name, 0))}
+
+    for(x in Local_Specialty.values())
+    { db.materials().safeInsert(MaterialListing(x.name, 0))}
+
+    for(x in Elemental_Stone_Material.values())
+    {
+        for(y in Elemental_Stone_Size.values())
+            db.materials().safeInsert((MaterialListing(x.name+" "+y.name, 0)))
+            }
+
+    for(x in db.materials().getAllMaterials())
+    {
+        Log.i("DB", "Item: "+x.name+" Amount: "+x.number)
+    }
 
 }

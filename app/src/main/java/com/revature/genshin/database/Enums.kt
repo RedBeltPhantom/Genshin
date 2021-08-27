@@ -1,10 +1,16 @@
 package com.revature.genshin.database
 
 import androidx.compose.ui.text.capitalize
+import com.google.android.material.shape.MaterialShapeDrawable
 import java.util.*
 
+interface Mats
+{
 
-enum class Elemental_Stone_Material(name:String){
+}
+
+
+enum class Elemental_Stone_Material(name:String):Mats{
     AGNIDUS_AGATE("Agnidus Agate"),
     BRILLIANT_DIAMOND("Brilliant Diamond"),
     VAYUDA_TURQOISE("Vayuda Turqoise"),
@@ -13,14 +19,14 @@ enum class Elemental_Stone_Material(name:String){
     PRITHIVA_TOPAZ("Prithiva Topaz"),
     VARUNADA_LAZURITE("Varunada Lazurite")
 }
-enum class Elemental_Stone_Size(size:String)
+enum class Elemental_Stone_Size(size:String):Mats
 {
     SLIVER("sliver"),
     FRAGMENT("fragment"),
     CHUNK("chunk"),
     GEMSTONE("gemstone")
 }
-enum class Boss_Material(material:String)
+enum class Boss_Material(material:String):Mats
 {
     BASALT_PILLAR("BASALT_PILLAR".toString().replace('_', ' ').capitalize(Locale.getDefault())),
     CLEANSING_HEART("CLEANSING_HEART".toString().replace('_', ' ').capitalize(Locale.getDefault())),
@@ -35,7 +41,7 @@ enum class Boss_Material(material:String)
     SMOLDERING_PEARL(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
 }
 
-enum class Local_Specialty(specialty:String) {
+enum class Local_Specialty(specialty:String):Mats {
     CALLA_LILY(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
     CECILIA(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
     COR_LAPIS(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
@@ -61,7 +67,7 @@ enum class Local_Specialty(specialty:String) {
 
 }
 
-enum class Common_Material_Low(material: String)
+enum class Common_Material_Low(material: String):Mats
 {
     SLIME_CONDENSATION(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
     DAMAGED_MASK(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
@@ -72,7 +78,7 @@ enum class Common_Material_Low(material: String)
     WOPPERFLOWER_NECTAR(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
     OLD_HANDGUARD(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
 }
-enum class Common_Material_Mid(material: String)
+enum class Common_Material_Mid(material: String):Mats
 {
     SLIME_SECRETIONS(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
     STAINED_MASK(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
@@ -83,7 +89,7 @@ enum class Common_Material_Mid(material: String)
     SHIMMERING_NECTAR(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
     KAGEUCHI_HANDGUARD(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
 }
-enum class Common_Material_High(material: String)
+enum class Common_Material_High(material: String):Mats
 {
     SLIME_CONCENTRATE(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),
     OMINOUS_MASK(this.toString().replace('_', ' ').capitalize(Locale.getDefault())),

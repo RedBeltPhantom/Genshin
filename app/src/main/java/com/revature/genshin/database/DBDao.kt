@@ -10,10 +10,10 @@ import androidx.room.Update
 interface  DBDao {
 
     @Insert
-    suspend fun insert(cha:Character)
+    private suspend fun insert(cha:Character){}
 
     @Update
-    suspend fun update(cha:Character)
+    private suspend fun update(cha:Character){}
 
     @Insert
     suspend fun safeInsert(champion:Character)
